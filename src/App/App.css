@@ -1,12 +1,69 @@
 @import "~bootstrap/dist/css/bootstrap.css";
+@import url('https://fonts.googleapis.com/css?family=Open+Sans:400,600,800');
 
 .app-wrapper { /* also known as apper lol */
-  background-color: #1abc9c;
-  color: #ffffff;
+  background: linear-gradient(#62efcd, #1abc9c);
   min-height: 100vh;
   padding-top: 20vh;
+  padding-bottom: 20vh;
+}
+
+.app-title {
+  font-size: 4.5rem;
+  line-height: 1.1;
+  font-family: 'Open Sans', sans-serif;
+  font-weight: 600;
+  color: #ffffff;
+}
+
+.form-control {
+  font-family: 'Open Sans', sans-serif;
+  border-width: 2px;
+  background-color: transparent;
+  border-color: rgba(0, 0, 0, 0.14902);
+  color: #444;
+}
+
+.form-control:focus {
+  background-color: transparent;
+  border-color: rgba(0, 0, 0, 0.14902);
+  box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+}
+
+.form-control:hover {
+  border-color: rgba(0, 0, 0, 0.14902);
+  box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
 }
 
 .btn {
+  border-width: 2px;
   cursor: pointer;
+  font-family: 'Open Sans', sans-serif;
+}
+
+.btn-primary {
+  color: #444;
+  border-color: rgba(0, 0, 0, 0.14902);
+  background-color: transparent;
+}
+
+.btn-primary:hover {
+  color: #444;
+  border-color: rgba(0, 0, 0, 0.14902);
+  background-color: transparent;
+  box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+}
+
+.btn-primary:active {
+  color: #444;
+  border-color: rgba(0, 0, 0, 0.14902);
+  background-color: transparent;
+  box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+}
+
+.btn-primary:focus {
+  color: #444;
+  border-color: rgba(0, 0, 0, 0.14902);
+  background-color: transparent;
+  box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
 }

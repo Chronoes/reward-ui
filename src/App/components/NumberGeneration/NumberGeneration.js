@@ -33,11 +33,11 @@ class NumberGeneration extends Component {
         <div className="form-group">
           <input type="number" name="start" value={start} onChange={this.handleInputChange} className="form-control" />
         </div>
-        <div className="form-group">
+        <div className="form-group mt-4">
           <input type="number" name="end" value={end} onChange={this.handleInputChange} className="form-control" />
         </div>
-        <div className="form-group">
-          <button type="submit" className="btn btn-primary">Generate number</button>
+        <div className="form-group mt-4">
+          <button type="submit" className="btn btn-primary btn-block">Generate number</button>
         </div>
       </form>
     );
