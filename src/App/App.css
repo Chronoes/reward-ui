@@ -18,7 +18,7 @@
 
 .form-control {
   font-family: 'Open Sans', sans-serif;
-  border-width: 2px;
+  border-width: 1px;
   background-color: transparent;
   border-color: rgba(0, 0, 0, 0.14902);
   color: #444;
@@ -36,7 +36,7 @@
 }
 
 .btn {
-  border-width: 2px;
+  border-width: 1px;
   cursor: pointer;
   font-family: 'Open Sans', sans-serif;
 }
