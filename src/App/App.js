@@ -42,20 +42,22 @@ class App extends Component {
               </h1>
             </div>
           </header>
-          <main className="row mt-4">
-            <div className="col-12 col-sm-6 col-md-4">
-              {generating ? (
-                <div>
-                  <NumberDisplay number={number} />
-                  <div>
-                    <button className="btn btn-primary mt-2 btn-block" onClick={this.restartGeneration}>Restart</button>
-                  </div>
-                </div>
-              ) : (
+          {generating ? (
+            <main className="row">
+              <div className="col-12">
+                <NumberDisplay number={number} />
+              </div>
+              <div className="col-12 col-sm-6 col-md-4">
+                <button className="btn btn-primary mt-2 btn-block" onClick={this.restartGeneration}>Restart</button>
+              </div>
+            </main>
+          ) : (
+            <main className="row mt-4">
+              <div className="col-12 col-sm-6 col-md-4">
                 <NumberGeneration start={start} end={end} generateNumber={this.generateNumber} />
-              )}
-            </div>
-          </main>
+              </div>
+            </main>
+          )}
         </div>
       </div>
     );
