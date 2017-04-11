@@ -10,7 +10,8 @@ class NumberGeneration extends Component {
     };
   }
 
-  handleGenerate = () => {
+  handleGenerate = (event) => {
+    event.preventDefault();
     const { generateNumber } = this.props;
     const startValue = parseInt(this.state.start, 10);
     const endValue = parseInt(this.state.end, 10);

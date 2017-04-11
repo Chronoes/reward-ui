@@ -12,7 +12,7 @@ class NumberDisplay extends Component {
   constructOdometer() {
     return new Odometer({
       el: this.odometerNode,
-      value: [this.props.number.toString(10)].map(() => '0'), // 1512 -> 0000
+      value: [...this.props.maximum.toString(10)].map(() => '0').join(''), // 1000 -> 0000
       theme: 'minimal',
     });
   }
@@ -22,12 +22,7 @@ class NumberDisplay extends Component {
   }
 
   render() {
-    const { number } = this.props;
-    return (
-      <div ref={this.saveReferenceToOdometerNode} className="number-display odometer">
-        {number}
-      </div>
-    );
+    return <div ref={this.saveReferenceToOdometerNode} className="number-display odometer" />;
   }
 }
 
