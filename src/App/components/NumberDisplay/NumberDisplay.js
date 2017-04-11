@@ -26,6 +26,7 @@ class NumberDisplay extends Component {
   }
 
   componentDidMount() {
+    this.mounted = true;
     const odometer = this.constructOdometer();
     odometer.update(this.props.number);
     this.audioTracks.drumRoll.play();
@@ -33,7 +34,9 @@ class NumberDisplay extends Component {
       if (this.props.isJohnCena) {
         this.audioTracks.johnCena.play();
         setTimeout(() => {
-          this.setState(() => ({ showCena: true }));
+          if (this.mounted) {
+            this.setState(() => ({ showCena: true }));
+          }
         }, 1200);
       } else {
         this.audioTracks.cymbal.play();
@@ -43,6 +46,7 @@ class NumberDisplay extends Component {
   }
 
   componentWillUnmount() {
+    this.mounted = false;
     // Fade music out gracefully on unmount
     let step = FADEOUT_DURATION;
     const fadeOut = setInterval(() => {
