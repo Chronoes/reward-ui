@@ -6,6 +6,8 @@ import cymbal from './cymbal.ogg';
 
 import './NumberDisplay.css';
 
+const ODOMETER_ANIMATION_DURATION = 2000;
+
 class NumberDisplay extends Component {
   componentWillMount() {
     // Ensure audio is loaded before mounting
@@ -15,21 +17,21 @@ class NumberDisplay extends Component {
 
   componentDidMount() {
     const odometerDuration = 2000;
-    const odometer = this.constructOdometer(odometerDuration);
+    const odometer = this.constructOdometer();
     odometer.update(this.props.number);
     this.drumRollAudio.play();
     setTimeout(() => {
       this.cymbalAudio.play();
       this.drumRollAudio.pause();
-    }, odometerDuration);
+    }, ODOMETER_ANIMATION_DURATION - 10);
   }
 
-  constructOdometer(duration) {
+  constructOdometer() {
     return new Odometer({
       el: this.odometerNode,
       value: [...this.props.maximum.toString(10)].map(() => '0').join(''), // 1000 -> 0000
       theme: 'minimal',
-      duration,
+      duration: ODOMETER_ANIMATION_DURATION,
     });
   }
 
