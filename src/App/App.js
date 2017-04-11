@@ -33,22 +33,30 @@ class App extends Component {
   render() {
     const { number, generating, start, end } = this.state;
     return (
-      <div className="app">
-        <div className="app__header">
-          <h2>Random number generator</h2>
-        </div>
-        <div className="app__content">
-          <div className="app__number-display">
-            {generating ? (
-              <div>
-                <NumberDisplay number={number} />
-                <div>
-                  <button onClick={this.restartGeneration}>Restart</button>
-                </div>
+      <div>
+        <section className="jumbotron jumbotron-fluid" style={{ backgroundColor: '#1abc9c', color: '#ffffff' }}>
+          <div className="container">
+            <div className="row">
+              <div className="col-12">
+                <h1>Random number generator</h1>
               </div>
-            ) : (
-              <NumberGeneration start={start} end={end} generateNumber={this.generateNumber} />
-            )}
+            </div>
+          </div>
+        </section>
+        <div className="container">
+          <div className="row">
+            <div className="col-12">
+              {generating ? (
+                <div>
+                  <NumberDisplay number={number} />
+                  <div>
+                    <button onClick={this.restartGeneration}>Restart</button>
+                  </div>
+                </div>
+              ) : (
+                <NumberGeneration start={start} end={end} generateNumber={this.generateNumber} />
+              )}
+            </div>
           </div>
         </div>
       </div>
