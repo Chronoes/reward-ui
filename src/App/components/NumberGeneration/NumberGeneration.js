@@ -30,9 +30,15 @@ class NumberGeneration extends Component {
     const { start, end } = this.state;
     return (
       <form onSubmit={this.handleGenerate}>
-        <input type="number" name="start" value={start} onChange={this.handleInputChange}></input>
-        <input type="number" name="end" value={end} onChange={this.handleInputChange}></input>
-        <button type="submit">Generate number</button>
+        <div className="form-group">
+          <input type="number" name="start" value={start} onChange={this.handleInputChange} className="form-control" />
+        </div>
+        <div className="form-group">
+          <input type="number" name="end" value={end} onChange={this.handleInputChange} className="form-control" />
+        </div>
+        <div className="form-group">
+          <button type="submit" className="btn btn-primary">Generate number</button>
+        </div>
       </form>
     );
   }

@@ -33,19 +33,15 @@ class App extends Component {
   render() {
     const { number, generating, start, end } = this.state;
     return (
-      <div>
-        <section className="jumbotron jumbotron-fluid" style={{ backgroundColor: '#1abc9c', color: '#ffffff' }}>
-          <div className="container">
-            <div className="row">
-              <div className="col-12">
-                <h1>Random number generator</h1>
-              </div>
-            </div>
-          </div>
-        </section>
+      <div className="app-wrapper">
         <div className="container">
-          <div className="row">
+          <header className="row">
             <div className="col-12">
+              <h1 className="display-3">Rando</h1>
+            </div>
+          </header>
+          <main className="row">
+            <div className="col-12 col-sm-6 col-md-4">
               {generating ? (
                 <div>
                   <NumberDisplay number={number} />
@@ -57,7 +53,7 @@ class App extends Component {
                 <NumberGeneration start={start} end={end} generateNumber={this.generateNumber} />
               )}
             </div>
-          </div>
+          </main>
         </div>
       </div>
     );
