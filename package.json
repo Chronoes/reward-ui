@@ -6,6 +6,7 @@
     "react-scripts": "0.9.5"
   },
   "dependencies": {
+    "odometer": "^0.4.8",
     "react": "^15.5.3",
     "react-dom": "^15.5.3"
   },

@@ -42,7 +42,9 @@ class App extends Component {
             {generating ? (
               <div>
                 <NumberDisplay number={number} />
-                <button onClick={this.restartGeneration}>Restart</button>
+                <div>
+                  <button onClick={this.restartGeneration}>Restart</button>
+                </div>
               </div>
             ) : (
               <NumberGeneration start={start} end={end} generateNumber={this.generateNumber} />
