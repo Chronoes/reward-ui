@@ -8,7 +8,7 @@ class NumberDisplay extends Component {
   componentDidMount() {
     this.odometer = this.constructOdometer(this.odometerRef);
     setTimeout(() => {
-      this.odometerRef.textContent = this.props.number;
+      this.odometer.update(this.props.number);
     }, 1000);
   }
 
