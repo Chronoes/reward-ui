@@ -11,6 +11,11 @@ const ODOMETER_ANIMATION_DURATION = 2000;
 const FADEOUT_DURATION = 350;
 
 class NumberDisplay extends Component {
+  constructor(props) {
+    super(props);
+    this.state = { showCena: false };
+  }
+
   componentWillMount() {
     // Ensure audio is loaded before mounting
     this.audioTracks = {
@@ -27,6 +32,9 @@ class NumberDisplay extends Component {
     setTimeout(() => {
       if (this.props.isJohnCena) {
         this.audioTracks.johnCena.play();
+        setTimeout(() => {
+          this.setState(() => ({ showCena: true }));
+        }, 1000);
       } else {
         this.audioTracks.cymbal.play();
       }
@@ -62,6 +70,15 @@ class NumberDisplay extends Component {
   }
 
   render() {
+    if (this.state.showCena) {
+      return (
+        <img
+          className="img-fluid rounded"
+          alt="John Cena"
+          src="http://i0.kym-cdn.com/photos/images/newsfeed/001/015/752/a14.jpg"
+        />
+      );
+    }
     return <div ref={this.saveReferenceToOdometerNode} className="number-display odometer" />;
   }
 }
