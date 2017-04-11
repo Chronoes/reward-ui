@@ -4,38 +4,35 @@ class NumberGeneration extends Component {
   constructor(props) {
     super(props);
 
-    this.state = {
-      start: props.start || 0,
-      end: props.end || 1000,
-    };
+    this.state = props;
   }
 
   handleGenerate = (event) => {
     event.preventDefault();
     const { generateNumber } = this.props;
-    const startValue = parseInt(this.state.start, 10);
-    const endValue = parseInt(this.state.end, 10);
+    const minimumNumber = parseInt(this.state.minimum, 10);
+    const maximumNumber = parseInt(this.state.maximum, 10);
 
-    const end = Math.max(Math.max(endValue, startValue), 1);
-    const start = Math.max(Math.min(startValue, end), 0);
+    const maximum = Math.max(Math.max(maximumNumber, minimumNumber), 1);
+    const minimum = Math.max(Math.min(minimumNumber, maximum), 0);
 
-    generateNumber(start, end);
+    generateNumber(minimum, maximum);
   }
 
   handleInputChange = (event) => {
     const { value, name } = event.target;
-    this.setState({ [name]: value });
+    this.setState((oldState) => ({ ...oldState,  [name]: value }));
   }
 
   render() {
-    const { start, end } = this.state;
+    const { minimum, maximum } = this.state;
     return (
       <form onSubmit={this.handleGenerate}>
         <div className="form-group">
-          <input type="number" name="start" value={start} onChange={this.handleInputChange} className="form-control" />
+          <input type="number" name="minimum" value={minimum} onChange={this.handleInputChange} className="form-control" />
         </div>
         <div className="form-group mt-4">
-          <input type="number" name="end" value={end} onChange={this.handleInputChange} className="form-control" />
+          <input type="number" name="maximum" value={maximum} onChange={this.handleInputChange} className="form-control" />
         </div>
         <div className="form-group mt-4">
           <button type="submit" className="btn btn-primary btn-block">Generate number</button>

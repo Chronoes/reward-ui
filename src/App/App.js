@@ -11,27 +11,24 @@ class App extends Component {
 
     this.state = {
       generating: false,
-      start: 0,
-      end: 0,
+      minimum: 0,
+      maximum: 1000,
       number: 0,
     }
   }
 
-  generateNumber = (start, end) => {
-    this.setState({
-      generating: true,
-      start,
-      end,
-      number: parseInt(start + Math.random() * end, 10),
-    });
-  }
+  generateNumber = (minimum, maximum) => this.setState(oldState => ({
+    ...oldState,
+    generating: true,
+    minimum,
+    maximum,
+    number: Math.floor(Math.random() * (maximum - minimum + 1) + minimum),
+  }));
 
-  restartGeneration = () => {
-    this.setState({ generating: false });
-  }
+  restartGeneration = () => this.setState(oldState => ({ ...oldState, generating: false }));
 
   render() {
-    const { number, generating, start, end } = this.state;
+    const { number, generating, minimum, maximum } = this.state;
     return (
       <div className="app-wrapper">
         <div className="container">
@@ -45,7 +42,7 @@ class App extends Component {
           {generating ? (
             <main className="row">
               <div className="col-12">
-                <NumberDisplay number={number} maximum={end} />
+                <NumberDisplay number={number} maximum={maximum} />
               </div>
               <div className="col-12 col-sm-6 col-md-4">
                 <button className="btn btn-primary mt-2 btn-block" onClick={this.restartGeneration}>Restart</button>
@@ -54,7 +51,11 @@ class App extends Component {
           ) : (
             <main className="row mt-4">
               <div className="col-12 col-sm-6 col-md-4">
-                <NumberGeneration start={start} end={end} generateNumber={this.generateNumber} />
+                <NumberGeneration
+                  minimum={minimum}
+                  maximum={maximum}
+                  generateNumber={this.generateNumber}
+                />
               </div>
             </main>
           )}
