@@ -6,6 +6,7 @@ import './NumberDisplay.css';
 class NumberDisplay extends Component {
   componentDidMount() {
     this.odometer = this.constructOdometer(this.odometerNode);
+    this.odometer.update(0);
     this.odometer.update(this.props.number);
   }
 
