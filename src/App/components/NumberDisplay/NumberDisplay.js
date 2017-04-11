@@ -5,13 +5,16 @@ import './NumberDisplay.css';
 
 class NumberDisplay extends Component {
   componentDidMount() {
-    this.odometer = this.constructOdometer(this.odometerNode);
-    this.odometer.update(0);
-    this.odometer.update(this.props.number);
+    const odometer = this.constructOdometer();
+    odometer.update(this.props.number);
   }
 
-  constructOdometer(el) {
-    return new Odometer({ el, value: el.textContent.replace(/./g, '9'), theme: 'minimal' });
+  constructOdometer() {
+    return new Odometer({
+      el: this.odometerNode,
+      value: [this.props.number.toString(10)].map(() => '0'), // 1512 -> 0000
+      theme: 'minimal',
+    });
   }
 
   saveReferenceToOdometerNode = (node) => {
