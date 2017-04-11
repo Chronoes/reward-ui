@@ -12,28 +12,26 @@ class NumberGeneration extends Component {
 
   handleGenerate = () => {
     const { generateNumber } = this.props;
-    const { start, end } = this.state;
-    generateNumber(parseInt(start, 10), parseInt(end, 10));
+    const startValue = parseInt(this.state.start, 10);
+    const endValue = parseInt(this.state.end, 10);
+
+    const end = Math.max(Math.max(endValue, startValue), 1);
+    const start = Math.max(Math.min(startValue, end), 0);
+
+    generateNumber(start, end);
   }
 
-  handleStartChange = (event) => {
-    const { value } = event.target;
-    const { end } = this.state;
-    this.setState({ start: Math.max(Math.min(value, end), 0) });
-  }
-
-  handleEndChange = (event) => {
-    const { value } = event.target;
-    const { start } = this.state;
-    this.setState({ end: Math.max(Math.max(value, start), 1) });
+  handleInputChange = (event) => {
+    const { value, name } = event.target;
+    this.setState({ [name]: value });
   }
 
   render() {
     const { start, end } = this.state;
     return (
       <form onSubmit={this.handleGenerate}>
-        <input type="number" value={start} onChange={this.handleStartChange}></input>
-        <input type="number" value={end} onChange={this.handleEndChange}></input>
+        <input type="number" name="start" value={start} onChange={this.handleInputChange}></input>
+        <input type="number" name="end" value={end} onChange={this.handleInputChange}></input>
         <button type="submit">Generate number</button>
       </form>
     );
