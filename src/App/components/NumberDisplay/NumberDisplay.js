@@ -25,13 +25,13 @@ class NumberDisplay extends Component {
     odometer.update(this.props.number);
     this.audioTracks.drumRoll.play();
     setTimeout(() => {
-      if (this.props.playCena) {
+      if (this.props.isJohnCena) {
         this.audioTracks.johnCena.play();
       } else {
         this.audioTracks.cymbal.play();
       }
       this.audioTracks.drumRoll.pause();
-    }, ODOMETER_ANIMATION_DURATION - (this.props.playCena ? 850 : 10));
+    }, ODOMETER_ANIMATION_DURATION - (this.props.isJohnCena ? 850 : 10));
   }
 
   componentWillUnmount() {
