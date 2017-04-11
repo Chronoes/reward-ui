@@ -34,7 +34,7 @@ class NumberDisplay extends Component {
         this.audioTracks.johnCena.play();
         setTimeout(() => {
           this.setState(() => ({ showCena: true }));
-        }, 1000);
+        }, 1200);
       } else {
         this.audioTracks.cymbal.play();
       }
