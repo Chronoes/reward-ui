@@ -7,16 +7,15 @@ class NumberGeneration extends Component {
     this.state = props;
   }
 
-  handleGenerate = (event) => {
+  onFormSubmit = (event) => {
     event.preventDefault();
-    const { generateNumber } = this.props;
     const minimumNumber = parseInt(this.state.minimum, 10);
     const maximumNumber = parseInt(this.state.maximum, 10);
 
     const maximum = Math.max(Math.max(maximumNumber, minimumNumber), 1);
     const minimum = Math.max(Math.min(minimumNumber, maximum), 0);
 
-    generateNumber(minimum, maximum);
+    this.props.onGenerateNumber(minimum, maximum);
   }
 
   handleInputChange = (event) => {
@@ -27,14 +26,30 @@ class NumberGeneration extends Component {
   render() {
     const { minimum, maximum } = this.state;
     return (
-      <form onSubmit={this.handleGenerate}>
+      <form onSubmit={this.onFormSubmit} className="form-horizontal">
         <div className="form-group">
-          <input type="number" name="minimum" value={minimum} onChange={this.handleInputChange} className="form-control" />
+          <label className="control-label" htmlFor="minimum-input">Generate a random number from</label>
+          <input
+            type="number"
+            name="minimum"
+            value={minimum}
+            onChange={this.handleInputChange}
+            className="form-control"
+            id="minimum-input"
+          />
         </div>
-        <div className="form-group mt-4">
-          <input type="number" name="maximum" value={maximum} onChange={this.handleInputChange} className="form-control" />
+        <div className="form-group">
+          <label className="control-label" htmlFor="maximum-input">to</label>
+          <input
+            type="number"
+            name="maximum"
+            value={maximum}
+            onChange={this.handleInputChange}
+            className="form-control"
+            id="maximum-input"
+          />
         </div>
-        <div className="form-group mt-4">
+        <div className="form-group">
           <button type="submit" className="btn btn-primary btn-block">Generate number</button>
         </div>
       </form>

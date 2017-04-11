@@ -16,6 +16,11 @@
   color: #ffffff;
 }
 
+.control-label {
+  font-family: 'Open Sans', sans-serif;
+  color: #444;
+}
+
 .form-control {
   font-family: 'Open Sans', sans-serif;
   border-width: 1px;

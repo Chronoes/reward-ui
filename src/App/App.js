@@ -58,7 +58,7 @@ class App extends Component {
                 <NumberGeneration
                   minimum={minimum}
                   maximum={maximum}
-                  generateNumber={this.generateNumber}
+                  onGenerateNumber={this.generateNumber}
                 />
               </div>
             </main>
