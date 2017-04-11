@@ -77,7 +77,7 @@ class NumberDisplay extends Component {
     if (this.state.showCena) {
       return (
         <img
-          className="img-fluid rounded"
+          className="img-fluid rounded img-cena"
           alt="John Cena"
           src="http://i0.kym-cdn.com/photos/images/newsfeed/001/015/752/a14.jpg"
         />
