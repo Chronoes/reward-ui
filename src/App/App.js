@@ -42,7 +42,7 @@ class App extends Component {
           {generating ? (
             <main className="row">
               <div className="col-12">
-                <NumberDisplay number={number} maximum={maximum} />
+                <NumberDisplay number={number} maximum={maximum} playCena={minimum === 420 && maximum === 1337} />
               </div>
               <div className="col-12 col-sm-6 col-md-4">
                 <button className="btn btn-primary mt-2 btn-block" onClick={this.restartGeneration}>Restart</button>

@@ -3,27 +3,49 @@ import Odometer from 'odometer';
 
 import drumRoll from './drum-roll-loopable.ogg';
 import cymbal from './cymbal.ogg';
+import johnCena from './john-cena-theme.ogg';
 
 import './NumberDisplay.css';
 
 const ODOMETER_ANIMATION_DURATION = 2000;
+const FADEOUT_DURATION = 350;
 
 class NumberDisplay extends Component {
   componentWillMount() {
     // Ensure audio is loaded before mounting
-    this.drumRollAudio = new Audio(drumRoll);
-    this.cymbalAudio = new Audio(cymbal);
+    this.audioTracks = {
+      drumRoll: new Audio(drumRoll),
+      cymbal: new Audio(cymbal),
+      johnCena: new Audio(johnCena),
+    };
   }
 
   componentDidMount() {
-    const odometerDuration = 2000;
     const odometer = this.constructOdometer();
     odometer.update(this.props.number);
-    this.drumRollAudio.play();
+    this.audioTracks.drumRoll.play();
     setTimeout(() => {
-      this.cymbalAudio.play();
-      this.drumRollAudio.pause();
-    }, ODOMETER_ANIMATION_DURATION - 10);
+      if (this.props.playCena) {
+        this.audioTracks.johnCena.play();
+      } else {
+        this.audioTracks.cymbal.play();
+      }
+      this.audioTracks.drumRoll.pause();
+    }, ODOMETER_ANIMATION_DURATION - (this.props.playCena ? 850 : 10));
+  }
+
+  componentWillUnmount() {
+    // Fade music out gracefully on unmount
+    let step = FADEOUT_DURATION;
+    const fadeOut = setInterval(() => {
+      step -= 1;
+      Object.keys(this.audioTracks).forEach((audio) => { this.audioTracks[audio].volume = step / FADEOUT_DURATION; });
+
+      if (step <= 0) {
+        Object.keys(this.audioTracks).forEach((audio) => this.audioTracks[audio].pause());
+        clearInterval(fadeOut);
+      }
+    }, 1);
   }
 
   constructOdometer() {
