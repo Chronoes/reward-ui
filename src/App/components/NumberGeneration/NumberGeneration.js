@@ -26,7 +26,7 @@ class NumberGeneration extends Component {
   render() {
     const { minimum, maximum } = this.state;
     return (
-      <form onSubmit={this.onFormSubmit} className="form-horizontal">
+      <form onSubmit={this.onFormSubmit}>
         <div className="form-group">
           <label className="control-label" htmlFor="minimum-input">Generate a random number from</label>
           <input

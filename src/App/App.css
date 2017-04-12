@@ -72,3 +72,37 @@
   background-color: transparent;
   box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
 }
+
+.flip-parent {
+  position: relative;
+}
+
+.flip-out {
+  position: absolute;
+}
+
+.flip-out-enter {
+  transform: scale(0.8);
+  opacity: 0;
+}
+
+.flip-out-enter.flip-out-enter-active {
+  transform: scale(1);
+  opacity: 1;
+  transition: transform 200ms ease-out, opacity 200ms ease-out;
+  transform-origin: 100px 50%;
+  position: absolute;
+}
+
+.flip-out-leave {
+  transform: scale(1);
+  opacity: 1;
+}
+
+.flip-out-leave.flip-out-leave-active {
+  transform: scale(0.8);
+  opacity: 0;
+  position: absolute;
+  transform-origin: 100px 50%;
+  transition: transform 200ms ease-out, opacity 200ms ease-out;
+}

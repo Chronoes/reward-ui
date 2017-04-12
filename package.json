@@ -9,6 +9,7 @@
     "bootstrap": "next",
     "odometer": "^0.4.8",
     "react": "^15.5.3",
+    "react-addons-css-transition-group": "^15.5.2",
     "react-dom": "^15.5.3"
   },
   "scripts": {

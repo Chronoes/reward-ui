@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import CSSTransitionGroup from 'react-addons-css-transition-group';
 
 import NumberDisplay from './components/NumberDisplay';
 import NumberGeneration from './components/NumberGeneration';
@@ -39,30 +40,42 @@ class App extends Component {
               </h1>
             </div>
           </header>
-          {generating ? (
-            <main className="row">
-              <div className="col-12">
-                <NumberDisplay
-                  number={number}
-                  maximum={maximum}
-                  isJohnCena={minimum === 420 && maximum === 1337}
-                />
-              </div>
-              <div className="col-12 col-sm-6 col-md-4">
-                <button className="btn btn-primary mt-2 btn-block" onClick={this.restartGeneration}>Restart</button>
-              </div>
-            </main>
-          ) : (
-            <main className="row mt-4">
-              <div className="col-12 col-sm-6 col-md-4">
-                <NumberGeneration
-                  minimum={minimum}
-                  maximum={maximum}
-                  onGenerateNumber={this.generateNumber}
-                />
-              </div>
-            </main>
-          )}
+          <div className="row flip-parent">
+            <CSSTransitionGroup
+              transitionName="flip-out"
+              transitionEnterTimeout={200}
+              transitionLeaveTimeout={200}>
+              {generating ? (
+                <main className="col-12 flip-out" key="0">
+                  <div className="row">
+                    <div className="col-12">
+                      <NumberDisplay
+                        number={number}
+                        maximum={maximum}
+                        isJohnCena={minimum === 420 && maximum === 1337}
+                      />
+                    </div>
+                    <div className="col-12 col-sm-8 col-md-6 col-lg-4">
+                      <button
+                        className="btn btn-primary mt-2 btn-block"
+                        onClick={this.restartGeneration}>
+                        Restart
+                      </button>
+                    </div>
+                  </div>
+                </main>
+              ) : (
+                <main className="col-12 col-sm-8 col-md-6 col-lg-4 flip-out" key="1">
+                  <NumberGeneration
+                    key="0"
+                    minimum={minimum}
+                    maximum={maximum}
+                    onGenerateNumber={this.generateNumber}
+                  />
+                </main>
+              )}
+            </CSSTransitionGroup>
+          </div>
         </div>
       </div>
     );
