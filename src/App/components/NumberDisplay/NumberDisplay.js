@@ -66,7 +66,11 @@ class NumberDisplay extends Component {
   constructOdometer() {
     return new Odometer({
       el: this.odometerNode,
-      value: [...this.props.maximum.toString(10)].map(() => '0').join(''), // 1000 -> 0000
+      value: this.props.maximum
+        .toString(10)
+        .split('')
+        .map(() => '0')
+        .join(''), // 1000 -> 0000
       theme: 'minimal',
       duration: ODOMETER_ANIMATION_DURATION,
     });
