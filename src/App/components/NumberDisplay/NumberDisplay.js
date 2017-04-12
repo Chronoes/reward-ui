@@ -127,7 +127,7 @@ class NumberDisplay extends Component {
         <div className="col">
           <div ref={this.saveReferenceToOdometerNode} className="number-display odometer" />
         </div>
-        <div className="col">
+        <div className="col hidden-xs-down">
           {
             successEmoji && !showCena ? <span className="success-emoji">{successEmoji}</span> : ''
           }
