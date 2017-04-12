@@ -2,12 +2,20 @@ import React, { Component } from 'react';
 
 import drumRoll from './drum-roll-loopable.ogg';
 import cymbal from './cymbal.ogg';
-import johnCena from './john-cena-theme.ogg';
-import snoopDogg from './snoop-d.ogg';
 
 import './SpecialEffectsContainer.css';
 
 const FADEOUT_DURATION = 350;
+
+const DEFAULT_EFFECT = {
+  track: cymbal,
+  effectStart(duration) {
+    return duration - 10;
+  },
+  useEffect() {
+    return true;
+  },
+};
 
 class SpecialEffectsContainer extends Component {
   constructor(props) {
@@ -19,66 +27,49 @@ class SpecialEffectsContainer extends Component {
 
   componentWillMount() {
     // Ensure audio is loaded before mounting
-    this.audioTracks = {
-      drumRoll: new Audio(drumRoll),
-      cymbal: new Audio(cymbal),
-      johnCena: new Audio(johnCena),
-      snoopDogg: new Audio(snoopDogg),
-    };
+    this.drumRollAudio = new Audio(drumRoll);
   }
 
   componentDidMount() {
     this.mounted = true;
 
-    const endTime = this.determineSoundEndTime();
+    const { duration, effects } = this.props;
 
-    this.audioTracks.drumRoll.play();
+    this.drumRollAudio.play();
+    const { track, effectStart, name: effectName } = effects.find((effect) => effect.useEffect()) || DEFAULT_EFFECT;
+
+    this.effectAudio = new Audio(track);
     setTimeout(() => {
-      if (this.props.isJohnCena) {
-        this.audioTracks.johnCena.play();
-      } else if (this.props.isSnoopDogg) {
-        this.audioTracks.snoopDogg.play();
-      } else {
-        this.audioTracks.cymbal.play();
-      }
-
-      this.audioTracks.drumRoll.pause();
-    }, endTime);
+      this.effectAudio.play();
+      this.drumRollAudio.pause();
+    }, effectStart(duration));
 
     setTimeout(() => {
-      if (this.mounted) {
+      // TODO: Make this more generic
+      if (this.mounted && effectName === 'johnCena') {
         this.setState(oldState => ({ ...oldState, showCena: true }));
       }
-    }, this.props.duration + 50);
+    }, duration + 50);
   }
 
-
-  componentWillUnmount() {
-    this.mounted = false;
-    // Fade music out gracefully on unmount
+  fadeOutAudio(playingAudio) {
     let step = FADEOUT_DURATION;
     const fadeOut = setInterval(() => {
       step -= 1;
-      Object.values(this.audioTracks).forEach((audio) => { audio.volume = step / FADEOUT_DURATION; });
+      playingAudio.forEach((audio) => { audio.volume = step / FADEOUT_DURATION; });
 
       if (step <= 0) {
-        Object.values(this.audioTracks).forEach((audio) => audio.pause());
+        playingAudio.forEach((audio) => audio.pause());
         clearInterval(fadeOut);
       }
     }, 1);
   }
 
-  determineSoundEndTime() {
-    const { duration } = this.props;
 
-    if (this.props.isJohnCena) {
-      return duration - 850;
-    } else if (this.props.isSnoopDogg) {
-      return duration - 950;
-    }
-    return duration - 10;
+  componentWillUnmount() {
+    this.mounted = false;
+    this.fadeOutAudio([this.drumRollAudio, this.effectAudio]);
   }
-
 
   render() {
     const { showCena } = this.state;

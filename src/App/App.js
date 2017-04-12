@@ -5,9 +5,34 @@ import NumberDisplay from './components/NumberDisplay';
 import ParameterForm from './components/ParameterForm';
 import SpecialEffectsContainer from './components/SpecialEffectsContainer';
 
+import johnCena from './assets/john-cena-theme.ogg';
+import snoopDogg from './assets/snoop-d.ogg';
+
 import './App.css';
 
 const ODOMETER_ANIMATION_DURATION = 2000;
+const SPECIAL_EFFECTS = [
+  {
+    name: 'johnCena',
+    track: johnCena,
+    effectStart(duration) {
+      return duration - 850;
+    },
+    useEffect(number, minimum, maximum) {
+      return minimum === 420 && maximum === 1337;
+    },
+  },
+  {
+    name: 'snoopDogg',
+    track: snoopDogg,
+    effectStart(duration) {
+      return duration - 950;
+    },
+    useEffect(number, minimum, maximum) {
+      return number === 420;
+    },
+  },
+];
 
 class App extends Component {
   constructor(props) {
@@ -59,6 +84,11 @@ class App extends Component {
 
   renderAnimatedContent() {
     const { number, generating, minimum, maximum } = this.state;
+    const specialEffects = SPECIAL_EFFECTS.map((effect) => ({
+      ...effect,
+      useEffect: effect.useEffect.bind(null, number, minimum, maximum),
+    }));
+
     return (
       <CSSTransitionGroup
         transitionName="flip-out"
@@ -69,8 +99,7 @@ class App extends Component {
             <div className="row">
               <div className="col-12">
                 <SpecialEffectsContainer
-                  isJohnCena={minimum === 420 && maximum === 1337}
-                  isSnoopDogg={number === 420}
+                  effects={specialEffects}
                   duration={ODOMETER_ANIMATION_DURATION}>
                   <NumberDisplay
                     number={number}
