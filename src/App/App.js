@@ -3,8 +3,11 @@ import CSSTransitionGroup from 'react-addons-css-transition-group';
 
 import NumberDisplay from './components/NumberDisplay';
 import ParameterForm from './components/ParameterForm';
+import SpecialEffectsContainer from './components/SpecialEffectsContainer';
 
 import './App.css';
+
+const ODOMETER_ANIMATION_DURATION = 2000;
 
 class App extends Component {
   constructor(props) {
@@ -65,12 +68,16 @@ class App extends Component {
           <main className="col-12 flip-out" key="0">
             <div className="row">
               <div className="col-12">
-                <NumberDisplay
-                  number={number}
-                  maximum={maximum}
+                <SpecialEffectsContainer
                   isJohnCena={minimum === 420 && maximum === 1337}
                   isSnoopDogg={number === 420}
-                />
+                  duration={ODOMETER_ANIMATION_DURATION}>
+                  <NumberDisplay
+                    number={number}
+                    maximum={maximum}
+                    odometerOptions={{ duration: ODOMETER_ANIMATION_DURATION }}
+                  />
+                </SpecialEffectsContainer>
               </div>
               {this.renderRestartButton()}
             </div>
