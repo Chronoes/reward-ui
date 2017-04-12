@@ -9,6 +9,31 @@
   font-weight: 600;
 }
 
+@keyframes slide-from-left {
+  0% {
+    transform: translateX(-300%);
+    opacity: 0;
+  }
+  30% {
+    transform: translateX(-140%);
+    opacity: 0.3;
+  }
+  100% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+.success-emoji {
+  font-size: 6rem;
+  line-height: 1.5;
+  display: inline-block;
+  animation: slide-from-left;
+  animation-duration: 0.2s;
+  animation-play-state: running;
+  animation-iteration-count: 1;
+}
+
 @keyframes size-bump {
   0% {
     transform: scale(1);

@@ -18,7 +18,10 @@ function getRandomEmoji() {
 class NumberDisplay extends Component {
   constructor(props) {
     super(props);
-    this.state = { showCena: false };
+    this.state = {
+      showCena: false,
+      successEmoji: null,
+    };
   }
 
   componentWillMount() {
@@ -46,6 +49,7 @@ class NumberDisplay extends Component {
       } else {
         if (this.mounted) {
           this.odometerNode.classList.toggle('number-display--finished');
+          this.setState(oldState => ({ ...oldState, successEmoji: getRandomEmoji() }));
         }
         this.audioTracks.cymbal.play();
       }
@@ -86,7 +90,7 @@ class NumberDisplay extends Component {
   }
 
   render() {
-    const { showCena } = this.state;
+    const { showCena, successEmoji } = this.state;
     if (showCena) {
       return (
         <img
@@ -97,8 +101,15 @@ class NumberDisplay extends Component {
       );
     }
     return (
-      <div>
-        <div ref={this.saveReferenceToOdometerNode} className="number-display odometer" />
+      <div className="row">
+        <div className="col">
+          <div ref={this.saveReferenceToOdometerNode} className="number-display odometer" />
+        </div>
+        <div className="col">
+          {
+            successEmoji ? <span className="success-emoji">{successEmoji}</span> : ''
+          }
+        </div>
       </div>
     );
   }
