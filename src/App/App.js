@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import CSSTransitionGroup from 'react-addons-css-transition-group';
 
 import NumberDisplay from './components/NumberDisplay';
-import NumberGeneration from './components/NumberGeneration';
+import ParameterForm from './components/ParameterForm';
 
 import './App.css';
 
@@ -66,7 +66,7 @@ class App extends Component {
                 </main>
               ) : (
                 <main className="col-12 col-sm-8 col-md-6 col-lg-4 flip-out" key="1">
-                  <NumberGeneration
+                  <ParameterForm
                     key="0"
                     minimum={minimum}
                     maximum={maximum}

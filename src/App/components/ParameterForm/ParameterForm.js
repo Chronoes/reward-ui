@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-class NumberGeneration extends Component {
+class ParameterForm extends Component {
   constructor(props) {
     super(props);
 
@@ -57,4 +57,4 @@ class NumberGeneration extends Component {
   }
 }
 
-export default NumberGeneration;
+export default ParameterForm;
