@@ -40,7 +40,7 @@ class App extends Component {
               </h1>
             </div>
           </header>
-          <div className="row flip-parent">
+          <div className="row">
             <CSSTransitionGroup
               transitionName="flip-out"
               transitionEnterTimeout={200}
