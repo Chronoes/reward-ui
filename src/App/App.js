@@ -69,6 +69,7 @@ class App extends Component {
                   number={number}
                   maximum={maximum}
                   isJohnCena={minimum === 420 && maximum === 1337}
+                  isSnoopDogg={number === 420}
                 />
               </div>
               {this.renderRestartButton()}
