@@ -35,10 +35,13 @@ class NumberDisplay extends Component {
         this.audioTracks.johnCena.play();
         setTimeout(() => {
           if (this.mounted) {
-            this.setState(() => ({ showCena: true }));
+            this.setState(oldState => ({ ...oldState, showCena: true }));
           }
         }, 1200);
       } else {
+        if (this.mounted) {
+          this.odometerNode.classList.toggle('number-display--finished');
+        }
         this.audioTracks.cymbal.play();
       }
       this.audioTracks.drumRoll.pause();
@@ -74,7 +77,8 @@ class NumberDisplay extends Component {
   }
 
   render() {
-    if (this.state.showCena) {
+    const { showCena } = this.state;
+    if (showCena) {
       return (
         <img
           className="img-fluid rounded img-cena"
