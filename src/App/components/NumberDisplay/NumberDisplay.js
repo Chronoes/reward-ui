@@ -9,6 +9,11 @@ import './NumberDisplay.css';
 
 const ODOMETER_ANIMATION_DURATION = 2000;
 const FADEOUT_DURATION = 350;
+const RANDOM_SUCCESS_EMOJIS = ['👌', '👍', '😊', '😎', '✊', '✌️', '🤙', '🙏'];
+
+function getRandomEmoji() {
+  return RANDOM_SUCCESS_EMOJIS[Math.floor(Math.random() * RANDOM_SUCCESS_EMOJIS.length)];
+}
 
 class NumberDisplay extends Component {
   constructor(props) {
@@ -91,7 +96,11 @@ class NumberDisplay extends Component {
         />
       );
     }
-    return <div ref={this.saveReferenceToOdometerNode} className="number-display odometer" />;
+    return (
+      <div>
+        <div ref={this.saveReferenceToOdometerNode} className="number-display odometer" />
+      </div>
+    );
   }
 }
 
