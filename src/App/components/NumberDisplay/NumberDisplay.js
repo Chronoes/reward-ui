@@ -4,6 +4,7 @@ import Odometer from 'odometer';
 import drumRoll from './drum-roll-loopable.ogg';
 import cymbal from './cymbal.ogg';
 import johnCena from './john-cena-theme.ogg';
+import snoopDogg from './snoop-dogg.ogg';
 
 import './NumberDisplay.css';
 
@@ -30,7 +31,22 @@ class NumberDisplay extends Component {
       drumRoll: new Audio(drumRoll),
       cymbal: new Audio(cymbal),
       johnCena: new Audio(johnCena),
+      snoopDogg: new Audio(snoopDogg),
     };
+  }
+
+  calculateOdometerDuration(isDefault = false) {
+    const defaultDuration = ODOMETER_ANIMATION_DURATION - 10;
+    if (isDefault) {
+      return defaultDuration;
+    }
+
+    if (this.props.isJohnCena) {
+      return ODOMETER_ANIMATION_DURATION - 850;
+    } else if (this.props.isSnoopDogg) {
+      return ODOMETER_ANIMATION_DURATION - 950;
+    }
+    return defaultDuration;
   }
 
   componentDidMount() {
@@ -46,15 +62,21 @@ class NumberDisplay extends Component {
             this.setState(oldState => ({ ...oldState, showCena: true }));
           }
         }, 1200);
+      } else if (this.props.isSnoopDogg) {
+        this.audioTracks.snoopDogg.play();
       } else {
-        if (this.mounted) {
-          this.odometerNode.classList.toggle('number-display--finished');
-          this.setState(oldState => ({ ...oldState, successEmoji: getRandomEmoji() }));
-        }
         this.audioTracks.cymbal.play();
       }
+
       this.audioTracks.drumRoll.pause();
-    }, ODOMETER_ANIMATION_DURATION - (this.props.isJohnCena ? 850 : 10));
+    }, this.calculateOdometerDuration());
+
+    setTimeout(() => {
+      if (this.mounted) {
+        this.setState(oldState => ({ ...oldState, successEmoji: getRandomEmoji() }));
+        this.odometerNode.classList.toggle('number-display--finished');
+      }
+    }, this.calculateOdometerDuration(true));
   }
 
   componentWillUnmount() {
@@ -107,7 +129,7 @@ class NumberDisplay extends Component {
         </div>
         <div className="col">
           {
-            successEmoji ? <span className="success-emoji">{successEmoji}</span> : ''
+            successEmoji && !showCena ? <span className="success-emoji">{successEmoji}</span> : ''
           }
         </div>
       </div>
