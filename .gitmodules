@@ -1,0 +1,3 @@
+[submodule "public/rando"]
+	path = public/rando
+	url = git@github.com:Chronoes/rando-effects.git
