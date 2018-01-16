@@ -72,7 +72,6 @@ class SpecialEffectsContainer extends Component {
     startingAudio.volume = 0;
     startingAudio.play();
 
-    console.log(startingAudio);
     let step = duration;
     const crossFade = setInterval(() => {
       step -= 1;
