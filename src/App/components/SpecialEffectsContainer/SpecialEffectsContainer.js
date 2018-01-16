@@ -3,17 +3,13 @@ import React, { Component } from 'react';
 import drumRoll from './drum-roll-loopable.ogg';
 import cymbal from './cymbal.ogg';
 
-import './SpecialEffectsContainer.css';
-
 const FADEOUT_DURATION = 350;
 
 const DEFAULT_EFFECT = {
+  name: 'cymbal',
   track: cymbal,
   effectStart(duration) {
     return duration - 10;
-  },
-  useEffect() {
-    return true;
   },
 };
 
@@ -21,10 +17,9 @@ class SpecialEffectsContainer extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      showCena: false,
+      customHtml: '',
     };
   }
-
   componentWillMount() {
     // Ensure audio is loaded before mounting
     this.drumRollAudio = new Audio(drumRoll);
@@ -33,38 +28,63 @@ class SpecialEffectsContainer extends Component {
   componentDidMount() {
     this.mounted = true;
 
-    const { duration, effects } = this.props;
+    const { duration, effect } = this.props;
 
     this.drumRollAudio.play();
-    const { track, effectStart, name: effectName } = effects.find((effect) => effect.useEffect()) || DEFAULT_EFFECT;
+    const { track, effectStart, crossFade, injectHtml, html } = effect || DEFAULT_EFFECT;
 
     this.effectAudio = new Audio(track);
-    setTimeout(() => {
-      this.effectAudio.play();
-      this.drumRollAudio.pause();
-    }, effectStart(duration));
 
-    setTimeout(() => {
-      // TODO: Make this more generic
-      if (this.mounted && effectName === 'johnCena') {
-        this.setState(oldState => ({ ...oldState, showCena: true }));
-      }
-    }, duration + 50);
+    if (crossFade) {
+      setTimeout(() => {
+        this.crossFadeAudio(this.drumRollAudio, this.effectAudio, crossFade);
+      }, effectStart(duration) - crossFade);
+    } else {
+      setTimeout(() => {
+        this.drumRollAudio.pause();
+        this.effectAudio.play();
+      }, effectStart(duration));
+    }
+
+    if (injectHtml) {
+      setTimeout(() => {
+        this.setState({ customHtml: html });
+      }, injectHtml(duration));
+    }
   }
 
-  fadeOutAudio(playingAudio) {
-    let step = FADEOUT_DURATION;
+  fadeOutAudio(playingAudio, duration = FADEOUT_DURATION) {
+    let step = duration;
     const fadeOut = setInterval(() => {
       step -= 1;
-      playingAudio.forEach((audio) => { audio.volume = step / FADEOUT_DURATION; });
+      playingAudio.forEach(audio => {
+        audio.volume = step / duration;
+      });
 
       if (step <= 0) {
-        playingAudio.forEach((audio) => audio.pause());
+        playingAudio.forEach(audio => audio.pause());
         clearInterval(fadeOut);
       }
     }, 1);
   }
 
+  crossFadeAudio(stoppingAudio, startingAudio, duration) {
+    startingAudio.volume = 0;
+    startingAudio.play();
+
+    console.log(startingAudio);
+    let step = duration;
+    const crossFade = setInterval(() => {
+      step -= 1;
+      stoppingAudio.volume = step / duration;
+      startingAudio.volume = (duration - step) / duration;
+
+      if (step <= 0) {
+        stoppingAudio.pause();
+        clearInterval(crossFade);
+      }
+    }, 1);
+  }
 
   componentWillUnmount() {
     this.mounted = false;
@@ -72,15 +92,9 @@ class SpecialEffectsContainer extends Component {
   }
 
   render() {
-    const { showCena } = this.state;
-    if (showCena) {
-      return (
-        <img
-          className="img-fluid rounded img-cena"
-          alt="John Cena"
-          src="http://i0.kym-cdn.com/photos/images/newsfeed/001/015/752/a14.jpg"
-        />
-      );
+    const { customHtml } = this.state;
+    if (customHtml) {
+      return <div dangerouslySetInnerHTML={{ __html: customHtml }} />;
     }
     return this.props.children;
   }

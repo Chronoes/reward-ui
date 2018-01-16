@@ -3,7 +3,16 @@ import Odometer from 'odometer';
 
 import './NumberDisplay.css';
 
-const RANDOM_SUCCESS_EMOJIS = ['👌', '👍', '😊', '😎', '✊', '✌️', '🤙', '🙏'];
+const RANDOM_SUCCESS_EMOJIS = [
+  ['👌', 'ok sign'],
+  ['👍', 'thumbs up'],
+  ['😊', 'happy'],
+  ['😎', 'cool'],
+  ['✊', 'fist'],
+  ['✌️', 'v sign'],
+  ['🤙', 'telephone sign'],
+  ['🙏', 'praying'],
+];
 
 function getRandomEmoji() {
   return RANDOM_SUCCESS_EMOJIS[Math.floor(Math.random() * RANDOM_SUCCESS_EMOJIS.length)];
@@ -13,7 +22,7 @@ class NumberDisplay extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      successEmoji: null,
+      successEmoji: [],
     };
   }
 
@@ -47,12 +56,13 @@ class NumberDisplay extends Component {
     });
   }
 
-  saveReferenceToOdometerNode = (node) => {
+  saveReferenceToOdometerNode = node => {
     this.odometerNode = node;
-  }
+  };
 
   render() {
     const { successEmoji } = this.state;
+    const [emoji, label] = successEmoji;
 
     return (
       <div className="row">
@@ -60,9 +70,11 @@ class NumberDisplay extends Component {
           <div ref={this.saveReferenceToOdometerNode} className="number-display odometer" />
         </div>
         <div className="col hidden-xs-down">
-          {
-            successEmoji && <span className="success-emoji">{successEmoji}</span>
-          }
+          {emoji && (
+            <span className="success-emoji" role="img" aria-label={label}>
+              {emoji}
+            </span>
+          )}
         </div>
       </div>
     );
